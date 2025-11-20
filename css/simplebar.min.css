@@ -10,4 +10,10 @@
     .simplebar-scrollbar {
         width: 6px !important;
         right: 0;
-    }}
+    }
+
+    #loader-wrapper .loader-section.section-left > img {
+    margin-right: 30px;
+    }
+
+}
