@@ -11,6 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- Template Zleda triforce Font -->
+    <link href="https://fonts.cdnfonts.com/css/triforce" rel="stylesheet">
+    <style>
+    @import url('https://fonts.cdnfonts.com/css/triforce');
+    </style>
+                
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/simplebar.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
@@ -25,11 +31,21 @@
 
 <body class="index image">
 <div id="wrapper" class="page" data-simplebar>
+    <!-- Preloader Start -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"><img style="width: 250px;" src="images/index/Shield_Left.png" alt="loeaded 1"></div>
+        <div class="loader-section section-right"><img style="width: 250px;" src="images/index/Shield_Right.png" alt="loaded 2"></div>
+    </div>
+    <!-- Preloader Ends -->
+    <!-- Transition Block Starts -->
     <div id="transitionblock">
         <div class="transition-content">
             <img src="images/index/Hello_there.webp" alt="transicion">
         </div>
     </div>
+    <!-- Transition Block Ends -->
+    <!-- Desktop Menu Starts -->
     <div id="navigation" class="is-fixed">
         <a href="#" class="navigation-trigger">Menú<span></span></a>
         <nav id="main-navigation">
@@ -42,6 +58,9 @@
             </ul>
         </nav>
     </div>
+    <!-- Desktop Menu Ends -->
+    <!-- Sections Starts -->
+    <!-- Home Section Starts -->
     <div class="home-section" id="home">
         <div class="home-content">
             <div class="right-dotted-shape"></div>
@@ -50,10 +69,13 @@
                     <div class="col-12">
                         <div class="hero-section d-flex align-items-center justify-content-center">
                             <div class="text-center">
-                                <h2>¡hola! soy<span> Alan</span></h2>
+                                <h2 class="zelda-font">hey, listen, i'm<span class="zelda-font"> Alan</span></h2>
                                 <p>Soy un Desarrollador Web y Consultor de Marketing Digital</p>
-                                <div class="buttons">
+                                <div class="buttons mb-5">
                                     <a id="link-about" href="#about" class="btn main-btn link-page"><span>más sobre mí</span></a>
+                                </div>
+                                <div class="buttons">
+                                    <a href="index.html"><span class="material-icons">language</span>English</a>
                                 </div>
                             </div>
                         </div>
@@ -76,18 +98,24 @@
                 <p>
                     Trabajemos juntos
                     <a class="d-block" href="mailto:alexis.chavez@hotmail.com">alexis.chavez@hotmail.com</a>
-                    <span>+52 812 3480 969</span>
+                    <span>+52 812 348 0969</span>
                 </p>
             </div>
             </div>
+        </div>
     </div>
+    <!-- Home Section Ends -->
+    <!-- About Section Starts -->
     <div class="section about-section" id="about">
         <div id="about-content">
+            <!-- Heading Starts -->
             <div class="heading text-left text-md-center">
                 <h2>
                     sobre <span>mí</span>
                 </h2>
             </div>
+            <!-- Heading Ends -->
+            <!-- Personal Infos Starts -->
             <div class="container infos">
                 <div class="row infos-holder align-items-center">
                     <div class="col-12 col-lg-5">
@@ -102,35 +130,39 @@
                             <div class="d-flex col-12 col-sm-6 personal-list-container personal-list-container-1">
                                 <ul class="list-unstyled personal-info w-100">
                                     <li>
-                                        <p><span class="material-icons">cake</span><span>Cumpleaños : </span>Noviembre 2005</p>
+                                        <p><span class="material-icons">cake</span>Cumpleaños :<span> Noviembre 2005</span></p>
                                     </li>
                                     <li>
-                                        <p><span class="material-icons">flag</span><span>Nacionalidad : </span>Mexicano</p>
+                                        <p><span class="material-icons">flag</span>Nacionalidad :<span> Mexicano</span></p>
                                     </li>
                                     <li>
-                                        <p><span class="material-icons">settings</span><span>Experiencia : </span>3 años</p>
+                                        <p><span class="material-icons">settings</span>Experiencia :<span> 3 años</span></p>
                                     </li>
                                 </ul>
                             </div>
                             <div class="d-flex col-12 col-sm-6 personal-list-container personal-list-container-2">
                                 <ul class="list-unstyled personal-info w-100">
                                     <li>
-                                        <p><span class="material-icons">call</span><span>Teléfono : </span>+52 812 3480 969</p>
+                                        <p><span class="material-icons">call</span>Teléfono :<span> +52 812 348 0969</span></p>
                                     </li>
                                     <li>
-                                        <p><span class="material-icons">location_on</span><span>Dirección : </span>Monterrey, MX</p>
+                                        <p><span class="material-icons">location_on</span>Dirección :<span> Monterrey, MX</span></p>
                                     </li>
                                     <li>
-                                        <p><span class="material-icons">email</span><span>Correo Electrónico : </span>alexis.chavez@hotmail.com</p>
+                                        <p><span class="material-icons">email</span>Correo Electrónico :<span> alexis.chavez@hotmail.com</span></p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <a target="_blank" href="#" class="btn main-btn"><span>descargar mi CV</span></a>
-                        </div>
+                        <!-- Download CV Starts -->
+                        <a target="_blank" href="images/index/Alan Chávez Résumé.pdf" class="btn main-btn"><span>descargar mi CV</span></a>
+                        <!-- Download CV Ends -->
+                    </div>
 
                 </div>
             </div>
+            <!-- Personal Infos Ends -->
+            <!-- Resume Starts -->
             <div class="w-100 resume">
                 <div class="container">
                     <div class="row">
@@ -150,23 +182,15 @@
                                         <h6 class="mb-0">2024 - actual</h6>
                                     </div>
                                     <span class="company d-inline-block mb-2">Fourier Consulting</span>
-                                    <p>Curabitur mollis bibendum luctus. Duis suscipit vitae dui metus sollicitudin sed suscipit.</p>
+                                    <p>Fourier es la agencia de marketing donde ejerzo un doble rol, gestionando operaciones financieras y administrativas clave mientras contribuyo activamente a la prestación de servicios principales. Mis contribuciones de producción incluyen el desarrollo completo del sitio web y la gestión de campañas de Google Ads de alto impacto tanto para la agencia como para sus clientes.</p>
                                 </div> 
-                                <div class="resume-item item">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h5 class="mb-0">Desarrollador Web</h5>
-                                        <h6 class="mb-0">2022 - 2024</h6>
-                                    </div>
-                                    <span class="company d-inline-block mb-2">Fourier Consulting</span>
-                                    <p>Curabitur mollis bibendum luctus. Duis suscipit vitae dui metus sollicitudin sed suscipit.</p>
-                                </div>
                                 <div class="resume-item item">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <h5 class="mb-0">Desarrollador web freelance</h5>
                                         <h6 class="mb-0">Oct 2024 – Ene 2025</h6>
                                     </div>
                                     <span class="company d-inline-block mb-2">evride.me</span>
-                                    <p>Curabitur mollis bibendum luctus. Duis suscipit vitae dui metus sollicitudin sed suscipit.</p>
+                                    <p>(Alquiler de Tesla de lujo para eventos/bodas): Como desarrollador freelance, entregué la construcción completa del sitio web, incluyendo toda la lógica de front-end y back-end. De manera crucial, integré una sólida pasarela de pago y una plataforma integral de reservas para automatizar completamente la programación de eventos y las transacciones.</p>
                                 </div>
                                 <div class="resume-item item">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -174,7 +198,7 @@
                                         <h6 class="mb-0">Abr 2022 - Oct 2022</h6>
                                     </div>
                                     <span class="company d-inline-block mb-2">Inelco It Solutions</span>
-                                    <p>Curabitur mollis bibendum luctus. Duis suscipit vitae dui metus sollicitudin sed suscipit.</p>
+                                    <p>Como Becario de Desarrollo Web en Inelco IT Solutions, mi enfoque principal fue el soporte y mantenimiento de la plataforma clave del cliente aspelsoluciones.com. Las responsabilidades incluyeron el mantenimiento del back-end utilizando el framework Laravel y la gestión de componentes de infraestructura como AWS (Amazon Web Services) y Cloudflare para la estabilidad y el rendimiento.</p>
                                 </div>
                                 </div>
                             <div id="educationcarousel" class="owl-carousel owl-theme hiddencarousel">
@@ -255,6 +279,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Resume Ends -->
             <div class="badges">
                 <div class="container">
                     <div class="row text-center">
@@ -408,18 +433,25 @@
                             <span class="percent" style="right: 32%;">68%<span class="arrow"></span></span>
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
-            </div>
+            <!-- Skills Ends -->
+            <!-- Fun Facts Starts -->
+        </div>
     </div>
+    <!-- About Section Ends -->
+    <!-- Portfolio Section Starts -->
     <div class="section work-section" id="work">
         <div id="work-content">
+            <!-- Heading Starts -->
             <div class="heading text-left text-md-center">
                 <h2>
                     mi portafolio <span>profesional</span>
                 </h2>
             </div>
+            <!-- Heading Ends -->
             <div class="container portfolio-container">
+                <!-- Portfolio Items Starts -->
                 <div class="grid row w-100 m-0 text-left">
                     <div class="item-title-hover"></div>
                     <div class="grid__item col-12 col-md-6 col-lg-4" data-size="960x640">
@@ -650,7 +682,12 @@
                                 <span>vista previa</span>
                             </span>
                         </div>
-                    </div> 
+                    </div>
+                    <!-- Portfolio Item Ends -->
+                    
+                </div> 
+                <!-- Portfolio Items Ends -->
+                <!-- ¨Close Portfolio Item Starts -->
                 <div class="preview">
                     <button class="action action--close">
                             <span class="position-relative d-block">
@@ -692,17 +729,20 @@
     </div>
     <div class="section contact-section" id="contact">
         <div id="contact-content">
+            <!-- Heading Starts -->
             <div class="heading text-left text-md-center">
                 <h2>
                     ponte <span>en contacto</span>
                 </h2>
             </div>
+            <!-- Heading Ends -->
             <div class="container">
+                <!-- Contact Boxes Starts -->
                 <div class="row boxes">
                     <div class="col-12 col-lg-4">
                         <div class="box">
                             <span class="material-icons">call</span>
-                            <p>+52 812 3480 969</p>
+                            <p>+52 812 348 0969</p>
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
@@ -718,18 +758,22 @@
                             <p>Monterrey, México</p>
                         </div>
                     </div>
-                    </div>
+                    <!-- Contact Box Item Ends -->
+                </div>
+                <!-- Contact Boxes Ends -->
                 <div class="separator"></div>
+                <!-- Contact Form Starts -->
                 <div class="row">
                     <div class="col-12 col-lg-4 leftside">
                         <div>
                             <h4 class="mb-0">envíame un correo</h4>
                             <p>
-                                No dudes en contactarme. Siempre estoy abierto a discutir nuevos proyectos o ideas creativas.
+                                Siéntete libre de contactarme. Siempre estoy abierto a discutir nuevos proyectos o ideas creativas.
                             </p>
                         </div>
                         <div>
                             <h4>sígueme</h4>
+                            <!-- Social Media Starts -->
                             <ul class="social list-unstyled mb-5 mb-lg-0 p-0 d-flex">
                                 <li class="facebook"><a title="Facebook" href="https://www.facebook.com/alanalexis.chavezjuarez/"><i class="fa fa-facebook"></i></a>
                                 </li>
@@ -740,38 +784,22 @@
                                 <li class="dribbble"><a title="Instagram" href="https://www.instagram.com/alex74.php/?igsh=Ymp5anprbmZ2a3Vk&utm_source=qr"><i class="fa fa-instagram"></i></a>
                                 </li>
                             </ul>
-                            </div>
+                            <!-- Social Media Ends -->
+                        </div>
                     </div>
-                    <div class="col-12 col-lg-8">
-                        <form class="formcontact" method="post" action="php/process-form.php">
-                            <div class="row contactform">
-                                <div class="col-12 col-md-4">
-                                    <input type="text" name="name" placeholder="TU NOMBRE" autocomplete="off">
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <input type="text" name="name" placeholder="ASUNTO" autocomplete="off">
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <input type="email" name="email" placeholder="TU CORREO ELECTRÓNICO" autocomplete="off">
-                                </div>
-                                <div class="col-12">
-                                    <textarea name="message" placeholder="TU MENSAJE"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn main-btn"><span>Enviar Mensaje</span></button>
-                                </div>
-                                <div class="col-12 form-message d-none">
-                                    <span class="output_message text-center text-uppercase"></span>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="col-8 col-lg-8">
+                        <a href="mailto:alexis.chavez@hotmail.com">
+                        <img class="photo" src="images/index/May_Force_With_U.jpg " >
+                        </a>
                     </div>
                 </div>
 
-                </div>
+                <!-- Contact Boxes Ends -->
+            </div>
         </div>
     </div>
-    </div>
+    <!-- Contact Section Ends -->
+</div>
 <script src="js/jquery-3.6.0.js"></script>
 <script src="js/simplebar.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
