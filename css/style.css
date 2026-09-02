@@ -50,6 +50,7 @@ html,
 body {
     position: relative;
     height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -267,7 +268,7 @@ body.dark .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
 }
 
 #transitionblock.animate {
-    animation: slide 1.7s cubic-bezier(0.84, 0, 0.08, 0.99);
+    animation: slide 0.7s cubic-bezier(0.84, 0, 0.08, 0.99);
 }
 
 

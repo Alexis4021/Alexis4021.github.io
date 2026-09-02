@@ -72,7 +72,7 @@ links.forEach(link => link.addEventListener('click', function (e) {
     setTimeout(function () {
         $('#main-navigation li a').removeClass('active');
         $el.addClass('active');
-    }, 1000);
+    }, 350);
 
     e.preventDefault();
     var page = link.getAttribute("href");
@@ -83,11 +83,11 @@ links.forEach(link => link.addEventListener('click', function (e) {
         if (page != "#home") {
             setTimeout(function () {
                 $('#wrapper').css('overflow','auto');
-            }, 1000);
+            }, 350);
         } else {
             setTimeout(function () {
                 $('#wrapper').css('overflow','hidden');
-            }, 1000);
+            }, 350);
         }
 
 
@@ -130,13 +130,13 @@ links.forEach(link => link.addEventListener('click', function (e) {
                     pages.forEach(a => document.querySelector(a).style.display = 'none');
                     document.querySelector(page).style.display = 'block';
                     $(".simplebar-content-wrapper").scrollTop(0);
-                }, 1000);
+                }, 350);
             } else {
                 setTimeout(function () {
                     pages.forEach(a => document.querySelector(a).style.display = 'none');
                     document.querySelector(page).style.display = 'block';
                     $("#wrapper").scrollTop(0);
-                }, 1000);
+                }, 350);
             }
         }
 
@@ -297,7 +297,7 @@ links.forEach(link => link.addEventListener('click', function (e) {
         $("body").toggleClass("loaded");
         setTimeout(function() {
             $("body").addClass("loaded");
-        }, 3000);
+        }, 400);
 
     });
 
