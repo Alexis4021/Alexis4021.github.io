@@ -297,6 +297,10 @@ body.dark .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
 
 /*** Loader ***/
 
+#loader-wrapper {
+    display: none !important;
+}
+
 #loader-wrapper .loader-section {
     position: fixed;
     top: 0;
