@@ -314,24 +314,39 @@ a { color: inherit; }
 }
 .disco__vinyl {
     position: absolute; z-index: 1; top: 3%; left: 3%; width: 94%; height: 94%; border-radius: 50%;
-    background:
-        radial-gradient(circle, var(--label, var(--pink)) 0 15%, #111 15.5% 17%, transparent 17.5%),
-        repeating-radial-gradient(circle, #151515 0 2px, #222 2px 3px),
-        #111;
     box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
     transition: transform .7s cubic-bezier(.2, .8, .2, 1);
 }
-.disco__vinyl::before {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    background: conic-gradient(from 30deg, transparent 0 20%, rgba(255,255,255,.12) 25%, transparent 30% 70%, rgba(255,255,255,.08) 75%, transparent 80%);
-}
+/* Reflejo de luz: se queda quieto mientras el disco gira debajo */
 .disco__vinyl::after {
-    content: ""; position: absolute; left: 50%; top: 50%; width: 3%; height: 3%;
+    content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+    background: conic-gradient(from 30deg, transparent 0 20%, rgba(255,255,255,.14) 25%, transparent 30% 70%, rgba(255,255,255,.09) 75%, transparent 80%);
+}
+.disco__disc {
+    position: absolute; inset: 0; border-radius: 50%;
+    background:
+        radial-gradient(circle, var(--night) 0 1.5%, transparent 1.6%),
+        radial-gradient(circle, transparent 0 15%, #111 15.5% 17%, transparent 17.5%),
+        repeating-radial-gradient(circle, #151515 0 2px, #222 2px 3px),
+        #111;
+}
+/* Etiqueta central con marcas asimétricas para que se note el giro */
+.disco__label {
+    position: absolute; left: 50%; top: 50%; width: 31%; height: 31%; transform: translate(-50%, -50%);
+    border-radius: 50%; display: flex; align-items: flex-start; justify-content: center;
+    background:
+        linear-gradient(90deg, transparent 47%, rgba(18, 10, 31, .55) 47% 53%, transparent 53%) 0 62% / 100% 38% no-repeat,
+        var(--label, var(--pink));
+    font-family: var(--display); font-size: clamp(.55rem, 2.6vw, .9rem); line-height: 1; letter-spacing: 1px;
+    color: var(--night); padding-top: 14%;
+}
+.disco__label::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 10%; height: 10%;
     transform: translate(-50%, -50%); border-radius: 50%; background: var(--night);
 }
 .disco.is-active .disco__vinyl { transform: translateX(42%); }
 .disco.is-playing .disco__vinyl { transform: translateX(52%); }
-.disco.is-playing .disco__vinyl::before { animation: spin 1.8s linear infinite; }
+.disco.is-playing .disco__disc { animation: spin 1.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .disco.is-playing .disco__cover { animation: bump .48s ease-in-out infinite alternate; }
 @keyframes bump { to { transform: scale(1.015); } }
@@ -571,4 +586,7 @@ textarea { resize: vertical; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
     html { scroll-behavior: auto; }
     .reveal { opacity: 1; transform: none; }
+    /* "Poner disco" lo activa el usuario, así que el giro sí se muestra */
+    .disco.is-playing .disco__disc { animation: spin 1.6s linear infinite !important; }
+    .eq i { animation: eq .8s ease-in-out infinite alternate !important; }
 }

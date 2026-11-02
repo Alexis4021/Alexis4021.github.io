@@ -135,7 +135,7 @@
             el.style.setProperty("--label", a.label);
             el.setAttribute("role", "group");
             el.setAttribute("aria-label", a.title + " — " + a.artist + " (versión Alan)");
-            el.innerHTML = '<span class="disco__vinyl"></span>' +
+            el.innerHTML = '<span class="disco__vinyl"><span class="disco__disc"><span class="disco__label">AF21</span></span></span>' +
                 '<img class="disco__cover" src="' + a.img + '" alt="Portada de ' + escapeHtml(a.title) + ' con la cara de Alan" loading="lazy" draggable="false">';
             el.addEventListener("click", function () {
                 if (moved) return;
