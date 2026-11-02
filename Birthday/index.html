@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Alan Fest 21 · Sábado 21 de noviembre</title>
+    <meta name="description" content="Alan Fest 21 — música en vivo, karaoke, beer pong y fiesta. Sábado 21 de noviembre 2026, 5:00 PM.">
+    <meta property="og:title" content="ALAN FEST 21">
+    <meta property="og:description" content="Sábado 21 de noviembre · 5:00 PM · Música en vivo, karaoke, beer pong y fiesta.">
+    <meta name="theme-color" content="#120a1f">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="confetti" aria-hidden="true"></canvas>
+
+    <nav class="topbar">
+        <a href="#top" class="topbar__logo">AF<span>21</span></a>
+        <div class="topbar__links">
+            <a href="#lineup">Line-up</a>
+            <a href="#lugar">Lugar</a>
+            <a href="#playlist">Playlist</a>
+            <a href="#rsvp" class="topbar__cta">RSVP</a>
+        </div>
+    </nav>
+
+    <!-- HERO / CARTEL -->
+    <header class="hero" id="top">
+        <div class="hero__sky">
+            <div class="sun"></div>
+            <div class="mountains"></div>
+            <div class="beam beam--1"></div>
+            <div class="beam beam--2"></div>
+            <div class="beam beam--3"></div>
+            <div class="beam beam--4"></div>
+        </div>
+
+        <div class="hero__content">
+            <p class="hero__kicker">Monterrey · Edición única · 2026</p>
+            <h1 class="hero__title" aria-label="Alan Fest 21">
+                <span class="hero__title-line">ALAN</span>
+                <span class="hero__title-line hero__title-line--outline">FEST</span>
+                <span class="hero__badge">21</span>
+            </h1>
+            <p class="hero__date">
+                <strong>SÁB 21 NOV</strong>
+                <span class="dot">●</span>
+                <strong>5:00 PM</strong>
+                <span class="dot">●</span>
+                <span>Pedregal de Lindavista</span>
+            </p>
+
+            <div class="countdown" id="countdown" aria-live="polite">
+                <div class="countdown__cell"><span data-unit="d">00</span><small>días</small></div>
+                <div class="countdown__cell"><span data-unit="h">00</span><small>horas</small></div>
+                <div class="countdown__cell"><span data-unit="m">00</span><small>min</small></div>
+                <div class="countdown__cell"><span data-unit="s">00</span><small>seg</small></div>
+            </div>
+
+            <div class="hero__actions">
+                <a href="#rsvp" class="btn btn--primary">Confirmar asistencia</a>
+                <a href="#playlist" class="btn btn--ghost">Agregar canción</a>
+            </div>
+        </div>
+
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee__track">
+                <span>MÚSICA EN VIVO ✦ KARAOKE ✦ BEER PONG ✦ FIESTA ✦ ALAN FEST 21 ✦ </span>
+                <span>MÚSICA EN VIVO ✦ KARAOKE ✦ BEER PONG ✦ FIESTA ✦ ALAN FEST 21 ✦ </span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- LINE-UP -->
+        <section class="section" id="lineup">
+            <div class="section__head">
+                <p class="eyebrow">El cartel</p>
+                <h2>LINE-UP</h2>
+                <p class="section__sub">Toca cada acto para ver los detalles.</p>
+            </div>
+
+            <div class="lineup">
+                <button class="act act--headliner" type="button" aria-pressed="false">
+                    <span class="act__front">
+                        <span class="act__tag">Headliner</span>
+                        <span class="act__name">MÚSICA EN VIVO</span>
+                        <span class="act__icon">🎸</span>
+                    </span>
+                    <span class="act__back">
+                        <span class="act__name act__name--sm">Música en vivo</span>
+                        <span>Banda en vivo para arrancar la noche. Trae tus mejores pasos y tus peticiones.</span>
+                    </span>
+                </button>
+                <button class="act act--pink" type="button" aria-pressed="false">
+                    <span class="act__front">
+                        <span class="act__tag">Main stage</span>
+                        <span class="act__name">KARAOKE</span>
+                        <span class="act__icon">🎤</span>
+                    </span>
+                    <span class="act__back">
+                        <span class="act__name act__name--sm">Karaoke</span>
+                        <span>Micrófono abierto. Nadie se va sin cantar al menos una. Calienta la voz desde ahorita.</span>
+                    </span>
+                </button>
+                <button class="act act--cyan" type="button" aria-pressed="false">
+                    <span class="act__front">
+                        <span class="act__tag">Torneo</span>
+                        <span class="act__name">BEER PONG</span>
+                        <span class="act__icon">🏓</span>
+                    </span>
+                    <span class="act__back">
+                        <span class="act__name act__name--sm">Beer pong</span>
+                        <span>Arma tu pareja y entra al torneo. Gloria eterna para los campeones.</span>
+                    </span>
+                </button>
+                <button class="act act--yellow" type="button" aria-pressed="false">
+                    <span class="act__front">
+                        <span class="act__tag">Closing</span>
+                        <span class="act__name">FIESTA</span>
+                        <span class="act__icon">🪩</span>
+                    </span>
+                    <span class="act__back">
+                        <span class="act__name act__name--sm">Fiesta</span>
+                        <span>Música, pista y ambiente hasta que el cuerpo aguante.</span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- Mini juego de beer pong -->
+            <div class="pong" id="pong">
+                <div class="pong__info">
+                    <p class="eyebrow">Calienta la mano</p>
+                    <h3>Tira la pelota</h3>
+                    <p>Toca un vaso para encestar. Mete los 6 y estás listo para el torneo.</p>
+                    <p class="pong__score">Encestadas: <strong id="pongScore">0</strong>/6</p>
+                    <button type="button" class="btn btn--ghost btn--sm" id="pongReset">Reiniciar</button>
+                </div>
+                <div class="pong__table" id="pongTable" aria-label="Mesa de beer pong">
+                    <div class="pong__row"><button class="cup" type="button" aria-label="Vaso 1"></button></div>
+                    <div class="pong__row"><button class="cup" type="button" aria-label="Vaso 2"></button><button class="cup" type="button" aria-label="Vaso 3"></button></div>
+                    <div class="pong__row"><button class="cup" type="button" aria-label="Vaso 4"></button><button class="cup" type="button" aria-label="Vaso 5"></button><button class="cup" type="button" aria-label="Vaso 6"></button></div>
+                    <span class="ball" id="pongBall"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CUANDO -->
+        <section class="section section--alt" id="cuando">
+            <div class="section__head">
+                <p class="eyebrow">Guarda la fecha</p>
+                <h2>CUÁNDO</h2>
+            </div>
+            <div class="when">
+                <div class="when__date">
+                    <span class="when__day">SÁB</span>
+                    <span class="when__num">21</span>
+                    <span class="when__month">NOV 2026</span>
+                </div>
+                <ul class="timeline">
+                    <li><strong>5:00 PM</strong><span>Abren puertas</span></li>
+                    <li><strong>Después</strong><span>Música en vivo</span></li>
+                    <li><strong>Más tarde</strong><span>Karaoke y torneo de beer pong</span></li>
+                    <li><strong>Toda la noche</strong><span>Fiesta</span></li>
+                </ul>
+                <div class="when__cal">
+                    <a class="btn btn--primary btn--sm" id="gcalLink" target="_blank" rel="noopener">Google Calendar</a>
+                    <button class="btn btn--ghost btn--sm" type="button" id="icsBtn">Descargar .ics</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LUGAR -->
+        <section class="section" id="lugar">
+            <div class="section__head">
+                <p class="eyebrow">El venue</p>
+                <h2>LUGAR</h2>
+                <p class="section__sub">Nottingham 310, Pedregal de Lindavista, Guadalupe, N.L.</p>
+            </div>
+            <div class="venue">
+                <div class="venue__map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3594.785064049138!2d-100.20448122393404!3d25.711539510674676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662ea43655bbab5%3A0xb53c86976c384374!2sC.%20Nottingham%20310%2C%20Pedregal%20de%20Linda%20Vista%202o%20Sector%202a%20Etapa%2C%2067112%20Guadalupe%2C%20N.L.!5e0!3m2!1ses-419!2smx!4v1793643974871!5m2!1ses-419!2smx" title="Mapa: Nottingham 310, Pedregal de Lindavista" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                <div class="venue__info">
+                    <p class="venue__address">C. Nottingham 310<br>Pedregal de Linda Vista 2o Sector 2a Etapa<br>67112 Guadalupe, N.L.</p>
+                    <div class="venue__actions">
+                        <a class="btn btn--primary btn--sm" href="https://maps.app.goo.gl/GyfLFKH36MazwqAb8" target="_blank" rel="noopener">Abrir en Google Maps</a>
+                        <a class="btn btn--ghost btn--sm" href="https://waze.com/ul?q=Nottingham%20310%20Pedregal%20de%20Linda%20Vista%20Guadalupe%20NL&navigate=yes" target="_blank" rel="noopener">Abrir en Waze</a>
+                        <button class="btn btn--ghost btn--sm" type="button" id="copyAddress">Copiar dirección</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLAYLIST -->
+        <section class="section section--alt" id="playlist">
+            <div class="section__head">
+                <p class="eyebrow">Tú pones la música</p>
+                <h2>PLAYLIST</h2>
+                <p class="section__sub">Busca una canción y agrégala directo a la playlist oficial de la fiesta.</p>
+            </div>
+            <div class="playlist">
+                <form class="songform" id="songForm" autocomplete="off">
+                    <label for="songQuery" class="sr-only">Buscar canción</label>
+                    <div class="songform__row">
+                        <input type="search" id="songQuery" placeholder="Canción o artista…" required minlength="2">
+                        <button type="submit" class="btn btn--primary">Buscar</button>
+                    </div>
+                    <p class="form-msg" id="songMsg" role="status"></p>
+                    <ul class="results" id="songResults"></ul>
+                </form>
+                <div class="playlist__embed">
+                    <iframe id="playlistEmbed" src="https://open.spotify.com/embed/playlist/6LdZAYWJHKMR4T0cm3PbGl?utm_source=generator&theme=0" title="Playlist de Alan Fest 21 en Spotify" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section class="section" id="rsvp">
+            <div class="section__head">
+                <p class="eyebrow">Consigue tu pulsera</p>
+                <h2>RSVP</h2>
+                <p class="section__sub">Confirma y te llega tu acceso por correo.</p>
+            </div>
+
+            <div class="rsvp">
+                <form class="rsvpform" id="rsvpForm" novalidate>
+                    <fieldset class="toggle">
+                        <legend>¿Vienes?</legend>
+                        <label><input type="radio" name="attending" value="si" checked><span>¡Ahí estaré! 🤘</span></label>
+                        <label><input type="radio" name="attending" value="no"><span>No puedo 😢</span></label>
+                    </fieldset>
+
+                    <div class="field">
+                        <label for="name">Nombre</label>
+                        <input id="name" name="name" type="text" required maxlength="80" placeholder="Tu nombre completo">
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="age">Edad</label>
+                            <input id="age" name="age" type="number" required min="1" max="120" inputmode="numeric" placeholder="21">
+                        </div>
+                        <div class="field">
+                            <label for="email">Correo</label>
+                            <input id="email" name="email" type="email" required maxlength="120" placeholder="tu@correo.com">
+                        </div>
+                    </div>
+
+                    <div class="guests" id="guestsBlock">
+                        <fieldset class="toggle">
+                            <legend>¿Llevas invitados?</legend>
+                            <label><input type="radio" name="hasGuests" value="no" checked><span>Voy solo</span></label>
+                            <label><input type="radio" name="hasGuests" value="si"><span>Sí, llevo +1</span></label>
+                        </fieldset>
+                        <div class="guests__detail" id="guestsDetail" hidden>
+                            <div class="field">
+                                <label for="guestCount">¿Cuántos?</label>
+                                <div class="stepper">
+                                    <button type="button" data-step="-1" aria-label="Menos">−</button>
+                                    <input id="guestCount" name="guestCount" type="number" min="1" max="10" value="1" readonly>
+                                    <button type="button" data-step="1" aria-label="Más">+</button>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="guestNames">Nombres de tus invitados</label>
+                                <textarea id="guestNames" name="guestNames" rows="2" maxlength="400" placeholder="Ej. Ana López, Juan Pérez"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="message">Mensaje para Alan <small>(opcional)</small></label>
+                        <textarea id="message" name="message" rows="2" maxlength="500" placeholder="Felicitaciones, peticiones, etc."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--block" id="rsvpSubmit">Confirmar</button>
+                    <p class="form-msg" id="rsvpMsg" role="status"></p>
+                </form>
+
+                <!-- Pulsera / boleto -->
+                <div class="wristband-wrap">
+                    <div class="wristband" id="wristband">
+                        <div class="wristband__strap"></div>
+                        <div class="wristband__tag">
+                            <span class="wristband__brand">ALAN FEST <b>21</b></span>
+                            <span class="wristband__type" id="wbType">GENERAL ACCESS</span>
+                            <span class="wristband__name" id="wbName">TU NOMBRE</span>
+                            <span class="wristband__meta"><span id="wbGuests">+0</span> · SÁB 21 NOV · 5PM</span>
+                            <span class="wristband__code" id="wbCode">AF21-0000</span>
+                        </div>
+                        <div class="wristband__strap"></div>
+                    </div>
+                    <p class="wristband__hint">Tu pulsera se actualiza mientras llenas el formulario.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>ALAN FEST <b>21</b> · Sábado 21 de noviembre 2026 · 5:00 PM</p>
+        <p class="footer__small">Nottingham 310, Pedregal de Lindavista</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

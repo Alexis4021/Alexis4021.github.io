@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Spotify Setup · Alan Fest 21</title>
+    <style>
+        body { margin: 0; padding: 32px 16px; background: #120a1f; color: #fff7ec; font-family: system-ui, sans-serif; line-height: 1.5; }
+        main { max-width: 640px; margin: 0 auto; }
+        h1 { margin-top: 0; }
+        label { display: block; margin: 14px 0 4px; font-weight: 700; }
+        input, textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 8px; border: 1px solid #555; background: #1c1030; color: inherit; font: inherit; }
+        textarea { font-family: monospace; min-height: 90px; }
+        button { margin-top: 16px; padding: 12px 20px; border: 0; border-radius: 999px; background: #1ed760; color: #0b1a10; font-weight: 700; cursor: pointer; }
+        code { background: #1c1030; padding: 2px 6px; border-radius: 4px; word-break: break-all; }
+        .err { color: #ff8a8a; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Spotify · configuración única</h1>
+    <ol>
+        <li>Crea una app en <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">developer.spotify.com/dashboard</a> (API: Web API).</li>
+        <li>En <em>Redirect URIs</em> agrega exactamente: <code id="redirectUri"></code></li>
+        <li>Pega aquí el Client ID y Client Secret y dale <b>Autorizar</b> con la cuenta dueña de la playlist.</li>
+        <li>Copia el refresh token a <code>Birthday/config.js</code>.</li>
+    </ol>
+
+    <div id="step1">
+        <label for="cid">Client ID</label>
+        <input id="cid" autocomplete="off">
+        <label for="csec">Client Secret</label>
+        <input id="csec" type="password" autocomplete="off">
+        <button id="authBtn" type="button">Autorizar con Spotify</button>
+    </div>
+
+    <div id="step2" hidden>
+        <label for="out">Refresh token</label>
+        <textarea id="out" readonly></textarea>
+    </div>
+    <p id="msg"></p>
+</main>
+<script>
+(function () {
+    var redirectUri = location.origin + location.pathname;
+    document.getElementById("redirectUri").textContent = redirectUri;
+    var msg = document.getElementById("msg");
+
+    function store(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+    function load(k) { try { return sessionStorage.getItem(k) || ""; } catch (e) { return ""; } }
+
+    document.getElementById("cid").value = load("af_cid");
+
+    document.getElementById("authBtn").addEventListener("click", function () {
+        var cid = document.getElementById("cid").value.trim();
+        var sec = document.getElementById("csec").value.trim();
+        if (!cid || !sec) { msg.textContent = "Faltan Client ID y Secret."; msg.className = "err"; return; }
+        var state = Math.random().toString(36).slice(2);
+        store("af_cid", cid);
+        store("af_sec", sec);
+        store("af_state", state);
+        location.href = "https://accounts.spotify.com/authorize?" + new URLSearchParams({
+            client_id: cid,
+            response_type: "code",
+            redirect_uri: redirectUri,
+            scope: "playlist-modify-public playlist-modify-private",
+            state: state,
+            show_dialog: "true"
+        });
+    });
+
+    var params = new URLSearchParams(location.search);
+    if (params.get("error")) {
+        msg.textContent = "Spotify respondió: " + params.get("error");
+        msg.className = "err";
+    } else if (params.get("code")) {
+        if (params.get("state") !== load("af_state")) {
+            msg.textContent = "El state no coincide; vuelve a intentar.";
+            msg.className = "err";
+            return;
+        }
+        msg.textContent = "Obteniendo token…";
+        fetch("https://accounts.spotify.com/api/token", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Basic " + btoa(load("af_cid") + ":" + load("af_sec"))
+            },
+            body: new URLSearchParams({ grant_type: "authorization_code", code: params.get("code"), redirect_uri: redirectUri })
+        }).then(function (r) { return r.json(); }).then(function (data) {
+            if (!data.refresh_token) throw new Error(JSON.stringify(data));
+            document.getElementById("step2").hidden = false;
+            document.getElementById("out").value = data.refresh_token;
+            msg.textContent = "Listo. Pega este valor en spotify.refreshToken de config.js.";
+            msg.className = "";
+            history.replaceState(null, "", redirectUri);
+        }).catch(function (e) {
+            msg.textContent = "Error: " + e.message;
+            msg.className = "err";
+        });
+    }
+})();
+</script>
+</body>
+</html>
