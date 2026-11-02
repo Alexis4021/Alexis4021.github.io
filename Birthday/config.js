@@ -1,16 +1,6 @@
-// Configuración de Alan Fest 21.
-// OJO: este archivo es público en GitHub Pages; cualquiera puede leer estas llaves.
+// Configuración pública de Alan Fest 21.
+// Las llaves de Brevo y Spotify viven como secretos en Supabase (Edge Functions > Secrets),
+// nunca en este archivo.
 window.ALANFEST_CONFIG = {
-  brevo: {
-    apiKey: "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",                              // Brevo > SMTP & API > API Keys (xkeysib-...)
-    senderEmail: "fourier.alandev@gmail.com", // Debe ser un remitente verificado en Brevo
-    senderName: "Alan Fest 21",
-    hostEmail: "alexis.chavez@hotmail.com"    // A dónde te llegan los RSVP
-  },
-  spotify: {
-    clientId: "7f31bd341df9410baf88e2333fc8c744",       // developer.spotify.com > tu app
-    clientSecret: "bf49084a4a204dd18f233f0f060f7958",   // developer.spotify.com > tu app
-    refreshToken: "AQD8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz8JUz eight JUz eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U z eight J U zeight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight	J	U	z	eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eight_J_U_z_eighT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT_J_U_Z_EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHT.J.U.Z.EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z,EIGHt,J,U,Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	UE	Z	EIGHL	V	Z	EIGHL	V	Z	EIGHL	V	Z	EIGHL	V	Z	EIGHL	V	Z	EIGHL	V	Z	EIGHL	V	Z	EIGHL	V	Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIGHL V Z EIG HL  W  H  K  M  R  4  T  0  c  m  3  P  b  G  l",
-    market: "MX"
-  }
+  apiBase: "https://zvxcgfqxptcifqulgbhw.supabase.co/functions/v1"
 };

@@ -21,6 +21,7 @@
         <a href="#top" class="topbar__logo">AF<span>21</span></a>
         <div class="topbar__links">
             <a href="#lineup">Line-up</a>
+            <a href="#discos">Discos</a>
             <a href="#lugar">Lugar</a>
             <a href="#playlist">Playlist</a>
             <a href="#rsvp" class="topbar__cta">RSVP</a>
@@ -148,8 +149,46 @@
             </div>
         </section>
 
+        <!-- DISCOGRAFÍA -->
+        <section class="section section--alt" id="discos">
+            <div class="section__head">
+                <p class="eyebrow">Greatest hits</p>
+                <h2>DISCOGRAFÍA</h2>
+                <p class="section__sub">Los clásicos, versión Alan. Desliza, toca la portada para ponerla a girar.</p>
+            </div>
+
+            <div class="discos" id="discos-app">
+                <div class="discos__stage" id="discosStage" tabindex="0" aria-roledescription="carrusel" aria-label="Portadas de álbumes">
+                    <!-- Las portadas se generan en app.js -->
+                </div>
+
+                <div class="discos__controls">
+                    <button type="button" class="discos__arrow" id="discosPrev" aria-label="Álbum anterior">‹</button>
+                    <div class="discos__dots" id="discosDots"></div>
+                    <button type="button" class="discos__arrow" id="discosNext" aria-label="Álbum siguiente">›</button>
+                </div>
+
+                <div class="discos__info" aria-live="polite">
+                    <p class="discos__genre" id="discosGenre"></p>
+                    <h3 class="discos__title" id="discosTitle"></h3>
+                    <p class="discos__artist" id="discosArtist"></p>
+                    <p class="discos__caption" id="discosCaption"></p>
+                    <div class="discos__actions">
+                        <button type="button" class="btn btn--primary btn--sm" id="discosPlay">▶ Poner disco</button>
+                        <button type="button" class="btn btn--ghost btn--sm" id="discosRequest">Pedir una de este artista</button>
+                        <button type="button" class="btn btn--ghost btn--sm" id="discosZoom">Ver en grande</button>
+                    </div>
+                </div>
+            </div>
+
+            <dialog class="lightbox" id="discosLightbox">
+                <button type="button" class="lightbox__close" aria-label="Cerrar">✕</button>
+                <img id="discosLightboxImg" alt="">
+            </dialog>
+        </section>
+
         <!-- CUANDO -->
-        <section class="section section--alt" id="cuando">
+        <section class="section" id="cuando">
             <div class="section__head">
                 <p class="eyebrow">Guarda la fecha</p>
                 <h2>CUÁNDO</h2>
@@ -174,7 +213,7 @@
         </section>
 
         <!-- LUGAR -->
-        <section class="section" id="lugar">
+        <section class="section section--alt" id="lugar">
             <div class="section__head">
                 <p class="eyebrow">El venue</p>
                 <h2>LUGAR</h2>
@@ -196,7 +235,7 @@
         </section>
 
         <!-- PLAYLIST -->
-        <section class="section section--alt" id="playlist">
+        <section class="section" id="playlist">
             <div class="section__head">
                 <p class="eyebrow">Tú pones la música</p>
                 <h2>PLAYLIST</h2>
@@ -219,7 +258,7 @@
         </section>
 
         <!-- RSVP -->
-        <section class="section" id="rsvp">
+        <section class="section section--alt" id="rsvp">
             <div class="section__head">
                 <p class="eyebrow">Consigue tu pulsera</p>
                 <h2>RSVP</h2>
@@ -274,6 +313,11 @@
                     <div class="field">
                         <label for="message">Mensaje para Alan <small>(opcional)</small></label>
                         <textarea id="message" name="message" rows="2" maxlength="500" placeholder="Felicitaciones, peticiones, etc."></textarea>
+                    </div>
+
+                    <div class="sr-only" aria-hidden="true">
+                        <label for="website">No llenes este campo</label>
+                        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
                     </div>
 
                     <button type="submit" class="btn btn--primary btn--block" id="rsvpSubmit">Confirmar</button>

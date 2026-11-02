@@ -289,6 +289,92 @@ a { color: inherit; }
     pointer-events: none;
 }
 
+/* ---------- Discografía ---------- */
+#discos { overflow: hidden; }
+.discos { --cover: min(320px, 58vw); max-width: 1100px; margin: 0 auto; }
+.discos__stage {
+    position: relative; height: calc(var(--cover) * 1.12);
+    perspective: 1400px; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+    outline: none;
+}
+.discos__stage:focus-visible { outline: 3px solid var(--cyan); outline-offset: 6px; border-radius: var(--radius); }
+.disco {
+    position: absolute; left: 50%; top: 0; width: var(--cover); aspect-ratio: 1;
+    margin-left: calc(var(--cover) / -2);
+    transform-style: preserve-3d;
+    transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .4s, filter .4s;
+    cursor: pointer;
+}
+.disco__cover {
+    position: relative; z-index: 2; display: block; width: 100%; height: 100%;
+    border-radius: 6px; object-fit: cover; background: var(--night);
+    box-shadow: 0 24px 40px rgba(0, 0, 0, .55);
+    -webkit-box-reflect: below 6px linear-gradient(transparent 72%, rgba(255, 255, 255, .18));
+    pointer-events: none;
+}
+.disco__vinyl {
+    position: absolute; z-index: 1; top: 3%; left: 3%; width: 94%; height: 94%; border-radius: 50%;
+    background:
+        radial-gradient(circle, var(--label, var(--pink)) 0 15%, #111 15.5% 17%, transparent 17.5%),
+        repeating-radial-gradient(circle, #151515 0 2px, #222 2px 3px),
+        #111;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+    transition: transform .7s cubic-bezier(.2, .8, .2, 1);
+}
+.disco__vinyl::before {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 30deg, transparent 0 20%, rgba(255,255,255,.12) 25%, transparent 30% 70%, rgba(255,255,255,.08) 75%, transparent 80%);
+}
+.disco__vinyl::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 3%; height: 3%;
+    transform: translate(-50%, -50%); border-radius: 50%; background: var(--night);
+}
+.disco.is-active .disco__vinyl { transform: translateX(42%); }
+.disco.is-playing .disco__vinyl { transform: translateX(52%); }
+.disco.is-playing .disco__vinyl::before { animation: spin 1.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.disco.is-playing .disco__cover { animation: bump .48s ease-in-out infinite alternate; }
+@keyframes bump { to { transform: scale(1.015); } }
+
+.discos__controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 18px; }
+.discos__arrow {
+    width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--ink); background: none; color: var(--ink);
+    font-size: 1.8rem; line-height: 1; cursor: pointer; transition: background .2s, color .2s;
+}
+.discos__arrow:hover { background: var(--ink); color: var(--night); }
+.discos__dots { display: flex; gap: 8px; }
+.discos__dots button {
+    width: 10px; height: 10px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--line); transition: width .3s, background .3s;
+}
+.discos__dots button[aria-current="true"] { width: 28px; background: var(--pink); }
+
+.discos__info { text-align: center; max-width: 620px; margin: 24px auto 0; }
+.discos__genre {
+    display: inline-block; margin: 0; padding: 4px 12px; border-radius: 999px;
+    background: var(--yellow); color: var(--night); font-weight: 700; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase;
+}
+.discos__title { font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 7vw, 3rem); line-height: 1; margin: 12px 0 4px; letter-spacing: 1px; }
+.discos__artist { margin: 0; color: var(--pink); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: .85rem; }
+.discos__caption { color: var(--muted); margin: 10px 0 0; }
+.discos__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 18px; }
+
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; margin-right: 4px; }
+.eq i { width: 3px; background: currentColor; animation: eq .8s ease-in-out infinite alternate; }
+.eq i:nth-child(2) { animation-delay: -.3s; }
+.eq i:nth-child(3) { animation-delay: -.6s; }
+@keyframes eq { from { height: 20%; } to { height: 100%; } }
+
+.lightbox {
+    padding: 0; border: 0; background: none; max-width: min(92vw, 800px); max-height: 92vh; overflow: visible;
+}
+.lightbox::backdrop { background: rgba(10, 5, 18, .88); backdrop-filter: blur(4px); }
+.lightbox img { display: block; width: 100%; height: auto; max-height: 88vh; object-fit: contain; border-radius: 8px; }
+.lightbox__close {
+    position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0;
+    background: var(--pink); color: var(--ink); font-size: 1.1rem; cursor: pointer; z-index: 1;
+}
+
 /* ---------- Cuándo ---------- */
 .when {
     max-width: 1000px; margin: 0 auto;

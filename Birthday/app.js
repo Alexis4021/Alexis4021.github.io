@@ -1,12 +1,11 @@
 (function () {
     "use strict";
 
-    var CONFIG = window.ALANFEST_CONFIG || { brevo: {}, spotify: {} };
+    var CONFIG = window.ALANFEST_CONFIG || {};
     var EVENT_START = new Date("2026-11-21T17:00:00-06:00"); // Monterrey (UTC-6)
     var EVENT_END = new Date("2026-11-22T02:00:00-06:00");
     var ADDRESS = "C. Nottingham 310, Pedregal de Linda Vista 2o Sector 2a Etapa, 67112 Guadalupe, N.L.";
     var MAPS_URL = "https://maps.app.goo.gl/GyfLFKH36MazwqAb8";
-    var PLAYLIST_URL = "https://open.spotify.com/playlist/" + CONFIG.spotify.playlistId;
 
     function $(sel, root) { return (root || document).querySelector(sel); }
     function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -106,6 +105,136 @@
         });
     }
 
+    /* ---------- Discografía ---------- */
+    var ALBUMS = [
+        { img: "images/albums/jose-jose.webp", title: "La Nave del Olvido", artist: "José José", genre: "Balada", label: "#d81b3c",
+          caption: "Camisa de satín y micrófono en mano. Ensayando para el karaoke." },
+        { img: "images/albums/blink-182.webp", title: "Enema of the State", artist: "blink-182", genre: "Pop punk", label: "#2de2e6",
+          caption: "Turno de noche. Guantes listos para el torneo de beer pong." },
+        { img: "images/albums/blue-hawaii.webp", title: "Blue Hawaii", artist: "Elvis Presley", genre: "Rock & roll", label: "#ffd23f",
+          caption: "14 great songs, un ukulele y collar de flores incluido." },
+        { img: "images/albums/haragan.webp", title: "El Haragán y Compañía", artist: "El Haragán y Compañía", genre: "Rock urbano", label: "#ff7a1a",
+          caption: "Valedores juveniles, presente. Rock de barrio para toda la banda." },
+        { img: "images/albums/panda.webp", title: "Para ti con desprecio", artist: "Panda", genre: "Emo / Pop punk", label: "#ff2e88",
+          caption: "Mariposas, aretes y desprecio. Edición de colección." },
+        { img: "images/albums/willie-colon.webp", title: "Legal Alien · Top Secrets", artist: "Willie Colón", genre: "Salsa", label: "#7b2ff7",
+          caption: "Lentes oscuros, bigote y salsa brava para cerrar la noche." }
+    ];
+
+    function initDiscos() {
+        var stage = $("#discosStage");
+        var dotsBox = $("#discosDots");
+        var playBtn = $("#discosPlay");
+        var lightbox = $("#discosLightbox");
+        var current = 0;
+        var playing = false;
+
+        var items = ALBUMS.map(function (a, i) {
+            var el = document.createElement("div");
+            el.className = "disco";
+            el.style.setProperty("--label", a.label);
+            el.setAttribute("role", "group");
+            el.setAttribute("aria-label", a.title + " — " + a.artist + " (versión Alan)");
+            el.innerHTML = '<span class="disco__vinyl"></span>' +
+                '<img class="disco__cover" src="' + a.img + '" alt="Portada de ' + escapeHtml(a.title) + ' con la cara de Alan" loading="lazy" draggable="false">';
+            el.addEventListener("click", function () {
+                if (moved) return;
+                if (i === current) setPlaying(!playing);
+                else go(i);
+            });
+            stage.appendChild(el);
+
+            var dot = document.createElement("button");
+            dot.type = "button";
+            dot.setAttribute("aria-label", "Ver " + a.title);
+            dot.addEventListener("click", function () { go(i); });
+            dotsBox.appendChild(dot);
+            return { el: el, dot: dot };
+        });
+
+        function render() {
+            var n = ALBUMS.length;
+            items.forEach(function (it, i) {
+                var o = i - current;
+                if (o > n / 2) o -= n;
+                if (o < -n / 2) o += n;
+                var abs = Math.abs(o);
+                it.el.style.transform = o === 0
+                    ? "translateX(-14%) translateZ(0)"
+                    : "translateX(" + (o * 48 + (o > 0 ? 62 : -34)) + "%) translateZ(" + (-abs * 160) + "px) rotateY(" + (o > 0 ? -38 : 38) + "deg)";
+                it.el.style.zIndex = 10 - abs;
+                it.el.style.opacity = abs > 2 ? 0 : 1;
+                it.el.style.filter = o === 0 ? "none" : "brightness(" + (1 - abs * 0.25) + ")";
+                it.el.style.pointerEvents = abs > 2 ? "none" : "";
+                it.el.classList.toggle("is-active", o === 0);
+                it.el.classList.toggle("is-playing", o === 0 && playing);
+                it.el.setAttribute("aria-hidden", o === 0 ? "false" : "true");
+                it.dot.setAttribute("aria-current", o === 0 ? "true" : "false");
+            });
+
+            var a = ALBUMS[current];
+            $("#discosGenre").textContent = a.genre;
+            $("#discosTitle").textContent = a.title;
+            $("#discosArtist").textContent = a.artist + " · versión Alan";
+            $("#discosCaption").textContent = a.caption;
+            playBtn.innerHTML = playing ? '<span class="eq"><i></i><i></i><i></i></span> Pausar' : "▶ Poner disco";
+        }
+
+        function go(i) {
+            current = (i + ALBUMS.length) % ALBUMS.length;
+            playing = false;
+            render();
+        }
+
+        function setPlaying(v) {
+            playing = v;
+            render();
+        }
+
+        $("#discosPrev").addEventListener("click", function () { go(current - 1); });
+        $("#discosNext").addEventListener("click", function () { go(current + 1); });
+        playBtn.addEventListener("click", function () { setPlaying(!playing); });
+
+        stage.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowLeft") { e.preventDefault(); go(current - 1); }
+            else if (e.key === "ArrowRight") { e.preventDefault(); go(current + 1); }
+            else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setPlaying(!playing); }
+        });
+
+        // Swipe / arrastre
+        var startX = null;
+        var moved = false;
+        stage.addEventListener("pointerdown", function (e) { startX = e.clientX; moved = false; });
+        stage.addEventListener("pointermove", function (e) {
+            if (startX !== null && Math.abs(e.clientX - startX) > 10) moved = true;
+        });
+        window.addEventListener("pointerup", function (e) {
+            if (startX === null) return;
+            var dx = e.clientX - startX;
+            startX = null;
+            if (Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+            setTimeout(function () { moved = false; }, 0);
+        });
+
+        $("#discosRequest").addEventListener("click", function () {
+            $("#songQuery").value = ALBUMS[current].artist;
+            $("#playlist").scrollIntoView({ behavior: "smooth" });
+            $("#songForm").requestSubmit();
+        });
+
+        $("#discosZoom").addEventListener("click", function () {
+            var a = ALBUMS[current];
+            var img = $("#discosLightboxImg");
+            img.src = a.img;
+            img.alt = "Portada de " + a.title + " con la cara de Alan";
+            if (lightbox.showModal) lightbox.showModal();
+        });
+        $(".lightbox__close", lightbox).addEventListener("click", function () { lightbox.close(); });
+        lightbox.addEventListener("click", function (e) { if (e.target === lightbox) lightbox.close(); });
+
+        render();
+    }
+
     /* ---------- Calendar ---------- */
     function toIcsDate(d) { return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""); }
 
@@ -154,43 +283,21 @@
         });
     }
 
-    /* ---------- Spotify ---------- */
-    var spotifyToken = null;
-    var spotifyTokenExp = 0;
-
-    function spotifyConfigured() {
-        var s = CONFIG.spotify;
-        return s && s.clientId && s.clientSecret && s.refreshToken && s.playlistId;
-    }
-
-    function getSpotifyToken() {
-        if (spotifyToken && Date.now() < spotifyTokenExp) return Promise.resolve(spotifyToken);
-        var s = CONFIG.spotify;
-        return fetch("https://accounts.spotify.com/api/token", {
+    /* ---------- Backend (Supabase Edge Functions) ---------- */
+    function api(fn, payload) {
+        return fetch(CONFIG.apiBase + "/" + fn, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Basic " + btoa(s.clientId + ":" + s.clientSecret)
-            },
-            body: new URLSearchParams({ grant_type: "refresh_token", refresh_token: s.refreshToken })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
         }).then(function (r) {
-            if (!r.ok) throw new Error("token " + r.status);
-            return r.json();
-        }).then(function (data) {
-            spotifyToken = data.access_token;
-            spotifyTokenExp = Date.now() + (data.expires_in - 60) * 1000;
-            return spotifyToken;
-        });
-    }
-
-    function spotifyApi(path, options) {
-        return getSpotifyToken().then(function (token) {
-            options = options || {};
-            options.headers = Object.assign({ "Authorization": "Bearer " + token }, options.headers || {});
-            return fetch("https://api.spotify.com/v1" + path, options);
-        }).then(function (r) {
-            if (!r.ok) throw new Error("api " + r.status);
-            return r.status === 204 ? null : r.json();
+            return r.json().catch(function () { return {}; }).then(function (data) {
+                if (!r.ok) {
+                    var err = new Error(fn + " " + r.status);
+                    err.code = data.error;
+                    throw err;
+                }
+                return data;
+            });
         });
     }
 
@@ -206,18 +313,11 @@
             var q = input.value.trim();
             if (q.length < 2) return;
 
-            if (!spotifyConfigured()) {
-                setMsg(msg, "La búsqueda aún no está activada. Mientras, agrégala directo en Spotify.", "error");
-                console.warn("[Alan Fest] Falta configurar spotify.clientId / clientSecret / refreshToken en config.js");
-                return;
-            }
-
             setMsg(msg, "Buscando…");
             list.innerHTML = "";
-            spotifyApi("/search?type=track&limit=8&market=" + encodeURIComponent(CONFIG.spotify.market || "MX") +
-                "&q=" + encodeURIComponent(q))
+            api("song", { action: "search", q: q })
                 .then(function (data) {
-                    var tracks = (data.tracks && data.tracks.items) || [];
+                    var tracks = data.tracks || [];
                     if (!tracks.length) {
                         setMsg(msg, "No encontramos nada. Prueba con otro nombre.", "error");
                         return;
@@ -234,24 +334,17 @@
         function renderTrack(track) {
             var li = document.createElement("li");
             li.className = "result";
-            var imgs = (track.album && track.album.images) || [];
-            var img = imgs.length ? imgs[imgs.length - 1].url : "";
-            var artists = (track.artists || []).map(function (a) { return a.name; }).join(", ");
             li.innerHTML =
-                '<img alt="" loading="lazy" src="' + escapeHtml(img) + '">' +
+                '<img alt="" loading="lazy" src="' + escapeHtml(track.image) + '">' +
                 '<span class="result__text"><span class="result__title">' + escapeHtml(track.name) + '</span>' +
-                '<span class="result__artist">' + escapeHtml(artists) + '</span></span>' +
+                '<span class="result__artist">' + escapeHtml(track.artists) + '</span></span>' +
                 '<button type="button">+ Agregar</button>';
 
             var btn = $("button", li);
             btn.addEventListener("click", function () {
                 btn.disabled = true;
                 btn.textContent = "…";
-                spotifyApi("/playlists/" + encodeURIComponent(CONFIG.spotify.playlistId) + "/items", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ uris: [track.uri] })
-                }).then(function () {
+                api("song", { action: "add", uri: track.uri }).then(function () {
                     btn.textContent = "✓ Lista";
                     setMsg(msg, "¡“" + track.name + "” ya está en la playlist! 🎶", "ok");
                     confetti(60);
@@ -260,7 +353,9 @@
                     console.error(err);
                     btn.disabled = false;
                     btn.textContent = "+ Agregar";
-                    setMsg(msg, "No se pudo agregar. Intenta otra vez.", "error");
+                    setMsg(msg, err.code === "rate_limited"
+                        ? "Ya agregaste muchas canciones. Deja algo para los demás 😉"
+                        : "No se pudo agregar. Intenta otra vez.", "error");
                 });
             });
             return li;
@@ -356,18 +451,12 @@
                 return;
             }
 
-            if (!CONFIG.brevo || !CONFIG.brevo.apiKey) {
-                setMsg(msg, "El RSVP aún no está activado. Avísale a Alan directamente.", "error");
-                console.warn("[Alan Fest] Falta brevo.apiKey en config.js");
-                return;
-            }
-
             submit.disabled = true;
             submit.textContent = "Enviando…";
             setMsg(msg, "");
 
-            var code = codeFrom(s.email + s.name);
-            Promise.all([sendHostEmail(s, code), sendGuestEmail(s, code)])
+            s.website = value("website");
+            api("rsvp", s)
                 .then(function () {
                     var band = $("#wristband");
                     band.classList.remove("is-confirmed");
@@ -384,85 +473,15 @@
                     console.error(err);
                     submit.disabled = false;
                     submit.textContent = "Confirmar";
-                    setMsg(msg, "No se pudo enviar. Intenta de nuevo en un momento.", "error");
+                    setMsg(msg, err.code === "rate_limited"
+                        ? "Demasiados intentos. Espera un rato e intenta de nuevo."
+                        : "No se pudo enviar. Intenta de nuevo en un momento.", "error");
                 });
         });
 
         updateUi();
     }
 
-    function sendBrevo(payload) {
-        var b = CONFIG.brevo;
-        payload.sender = { name: b.senderName || "Alan Fest 21", email: b.senderEmail };
-        return fetch("https://api.brevo.com/v3/smtp/email", {
-            method: "POST",
-            headers: { "api-key": b.apiKey, "Content-Type": "application/json", "Accept": "application/json" },
-            body: JSON.stringify(payload)
-        }).then(function (r) {
-            if (!r.ok) return r.text().then(function (t) { throw new Error("Brevo " + r.status + ": " + t); });
-            return r.json();
-        });
-    }
-
-    function emailShell(inner) {
-        return '<div style="margin:0;padding:24px;background:#120a1f;font-family:Arial,Helvetica,sans-serif;color:#fff7ec">' +
-            '<div style="max-width:560px;margin:0 auto;background:#1c1030;border-radius:16px;overflow:hidden">' +
-            '<div style="padding:28px 24px;background:linear-gradient(135deg,#ff7a1a,#ff2e88);text-align:center">' +
-            '<div style="font-size:40px;font-weight:900;letter-spacing:2px;color:#fff">ALAN FEST <span style="background:#120a1f;padding:0 8px;border-radius:6px">21</span></div>' +
-            '<div style="margin-top:6px;font-size:14px;letter-spacing:3px;color:#fff">SÁB 21 NOV 2026 · 5:00 PM</div></div>' +
-            '<div style="padding:24px">' + inner + '</div></div></div>';
-    }
-
-    function row(label, val) {
-        return '<tr><td style="padding:6px 12px 6px 0;color:#c9b8dc;vertical-align:top">' + label +
-            '</td><td style="padding:6px 0;color:#fff7ec"><b>' + escapeHtml(val) + '</b></td></tr>';
-    }
-
-    function sendHostEmail(s, code) {
-        var subject = (s.attending ? "✅ RSVP: " : "❌ No asistirá: ") + s.name +
-            (s.guestCount ? " (+" + s.guestCount + ")" : "");
-        var html = emailShell(
-            '<h2 style="margin:0 0 12px;color:#ffd23f">' + (s.attending ? "Nuevo RSVP confirmado" : "Alguien no podrá ir") + '</h2>' +
-            '<table style="border-collapse:collapse;font-size:15px">' +
-            row("Nombre", s.name) + row("Edad", s.age) + row("Correo", s.email) +
-            row("Asiste", s.attending ? "Sí" : "No") +
-            row("Invitados", s.guestCount ? String(s.guestCount) : "Ninguno") +
-            (s.guestNames ? row("Nombres", s.guestNames) : "") +
-            (s.message ? row("Mensaje", s.message) : "") +
-            row("Folio", code) +
-            '</table>');
-        return sendBrevo({
-            to: [{ email: CONFIG.brevo.hostEmail, name: "Alan" }],
-            replyTo: { email: s.email, name: s.name },
-            subject: subject,
-            htmlContent: html
-        });
-    }
-
-    function sendGuestEmail(s, code) {
-        var first = s.name.split(" ")[0];
-        var inner = s.attending
-            ? '<h2 style="margin:0 0 8px;color:#ffd23f">¡Ya tienes tu pulsera, ' + escapeHtml(first) + '! 🤘</h2>' +
-              '<p style="margin:0 0 16px;line-height:1.5">Tu lugar en <b>Alan Fest 21</b> está confirmado' +
-              (s.guestCount ? ' para ti y ' + s.guestCount + ' invitado' + (s.guestCount > 1 ? 's' : '') : '') + '.</p>' +
-              '<div style="background:linear-gradient(135deg,#ffd23f,#ff7a1a);color:#120a1f;border-radius:12px;padding:16px;margin:0 0 18px">' +
-              '<div style="font-size:12px;letter-spacing:3px;font-weight:bold">GENERAL ACCESS' + (s.guestCount ? ' +' + s.guestCount : '') + '</div>' +
-              '<div style="font-size:26px;font-weight:900;text-transform:uppercase">' + escapeHtml(s.name) + '</div>' +
-              '<div style="font-family:monospace;font-size:13px;opacity:.8">' + code + '</div></div>' +
-              '<p style="margin:0 0 6px"><b style="color:#ff2e88">Line-up:</b> música en vivo · karaoke · beer pong · fiesta</p>' +
-              '<p style="margin:0 0 6px"><b style="color:#ff2e88">Cuándo:</b> sábado 21 de noviembre 2026, 5:00 PM</p>' +
-              '<p style="margin:0 0 18px"><b style="color:#ff2e88">Dónde:</b> ' + escapeHtml(ADDRESS) + '</p>' +
-              '<p style="margin:0 0 10px"><a href="' + MAPS_URL + '" style="display:inline-block;background:#ff2e88;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">Cómo llegar</a> ' +
-              '<a href="' + PLAYLIST_URL + '" style="display:inline-block;background:#1ed760;color:#0b1a10;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">Playlist</a></p>'
-            : '<h2 style="margin:0 0 8px;color:#ffd23f">Gracias por avisar, ' + escapeHtml(first) + '</h2>' +
-              '<p style="margin:0;line-height:1.5">Te vamos a extrañar en Alan Fest 21. Si cambias de planes, vuelve a confirmar desde la invitación.</p>';
-        return sendBrevo({
-            to: [{ email: s.email, name: s.name }],
-            replyTo: { email: CONFIG.brevo.hostEmail, name: "Alan" },
-            subject: s.attending ? "🎟️ Tu pulsera para Alan Fest 21" : "Alan Fest 21 — gracias por avisar",
-            htmlContent: emailShell(inner)
-        });
-    }
 
     /* ---------- Confetti ---------- */
     var canvas = $("#confetti");
@@ -522,7 +541,7 @@
     /* ---------- Reveal on scroll ---------- */
     function initReveal() {
         if (!("IntersectionObserver" in window)) return;
-        var els = $all(".section__head, .act, .pong, .when, .venue, .playlist, .rsvp");
+        var els = $all(".section__head, .act, .pong, .discos, .when, .venue, .playlist, .rsvp");
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) {
                 if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
@@ -534,6 +553,7 @@
     initCountdown();
     initLineup();
     initPong();
+    initDiscos();
     initCalendar();
     initVenue();
     initPlaylist();
