@@ -65,7 +65,6 @@ function codeFrom(str: string) {
 interface Rsvp {
   attending: boolean;
   name: string;
-  age: number;
   email: string;
   guestCount: number;
   guestNames: string;
@@ -75,19 +74,16 @@ interface Rsvp {
 function parse(body: Record<string, unknown>): Rsvp | string {
   const attending = body.attending === true || body.attending === "si";
   const name = clean(body.name, 80);
-  const age = Number(body.age);
   const email = clean(body.email, 120);
   const hasGuests = attending && (body.hasGuests === true || body.hasGuests === "si");
   const guestCount = hasGuests ? Math.max(1, Math.min(10, Math.floor(Number(body.guestCount) || 1))) : 0;
 
   if (name.length < 2) return "name";
-  if (!(age >= 1 && age <= 120)) return "age";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "email";
 
   return {
     attending,
     name,
-    age: Math.floor(age),
     email,
     guestCount,
     guestNames: hasGuests ? clean(body.guestNames, 400) : "",
@@ -98,9 +94,12 @@ function parse(body: Record<string, unknown>): Rsvp | string {
 function emailShell(inner: string) {
   return '<div style="margin:0;padding:24px;background:#120a1f;font-family:Arial,Helvetica,sans-serif;color:#fff7ec">' +
     '<div style="max-width:560px;margin:0 auto;background:#1c1030;border-radius:16px;overflow:hidden">' +
-    '<div style="padding:28px 24px;background:linear-gradient(135deg,#ff7a1a,#ff2e88);text-align:center">' +
-    '<div style="font-size:40px;font-weight:900;letter-spacing:2px;color:#fff">ALAN FEST <span style="background:#120a1f;padding:0 8px;border-radius:6px">21</span></div>' +
-    '<div style="margin-top:6px;font-size:14px;letter-spacing:3px;color:#fff">SÁB 21 NOV 2026 · 5:00 PM</div></div>' +
+    // Hotmail/Outlook ignoran los degradados: bgcolor + background-color sólido como respaldo.
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>' +
+    '<td bgcolor="#ff2e88" style="padding:28px 24px;background-color:#ff2e88;background-image:linear-gradient(135deg,#ff7a1a,#ff2e88);text-align:center">' +
+    '<div style="font-size:40px;font-weight:900;letter-spacing:2px;color:#ffffff">ALAN FEST <span style="background-color:#120a1f;color:#ffffff;padding:0 8px;border-radius:6px">21</span></div>' +
+    '<div style="margin-top:6px;font-size:14px;letter-spacing:3px;color:#ffffff">SÁB 21 NOV 2026 · 5:00 PM</div>' +
+    "</td></tr></table>" +
     '<div style="padding:24px">' + inner + "</div></div></div>";
 }
 
@@ -117,7 +116,7 @@ function hostEmail(s: Rsvp, code: string) {
     htmlContent: emailShell(
       '<h2 style="margin:0 0 12px;color:#ffd23f">' + (s.attending ? "Nuevo RSVP confirmado" : "Alguien no podrá ir") + "</h2>" +
         '<table style="border-collapse:collapse;font-size:15px">' +
-        row("Nombre", s.name) + row("Edad", s.age) + row("Correo", s.email) +
+        row("Nombre", s.name) + row("Correo", s.email) +
         row("Asiste", s.attending ? "Sí" : "No") +
         row("Invitados", s.guestCount ? String(s.guestCount) : "Ninguno") +
         (s.guestNames ? row("Nombres", s.guestNames) : "") +
@@ -134,11 +133,13 @@ function guestEmail(s: Rsvp, code: string) {
     ? '<h2 style="margin:0 0 8px;color:#ffd23f">¡Ya tienes tu pulsera, ' + escapeHtml(first) + "! 🤘</h2>" +
       '<p style="margin:0 0 16px;line-height:1.5">Tu lugar en <b>Alan Fest 21</b> está confirmado' +
       (s.guestCount ? " para ti y " + s.guestCount + " invitado" + (s.guestCount > 1 ? "s" : "") : "") + ".</p>" +
-      '<div style="background:linear-gradient(135deg,#ffd23f,#ff7a1a);color:#120a1f;border-radius:12px;padding:16px;margin:0 0 18px">' +
-      '<div style="font-size:12px;letter-spacing:3px;font-weight:bold">GENERAL ACCESS' + (s.guestCount ? " +" + s.guestCount : "") + "</div>" +
-      '<div style="font-size:26px;font-weight:900;text-transform:uppercase">' + escapeHtml(s.name) + "</div>" +
-      '<div style="font-family:monospace;font-size:13px;opacity:.8">' + code + "</div></div>" +
-      '<p style="margin:0 0 6px"><b style="color:#ff2e88">Line-up:</b> música en vivo · karaoke · beer pong · fiesta</p>' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 18px"><tr>' +
+      '<td bgcolor="#ffd23f" style="padding:16px 18px;border-radius:12px;background-color:#ffd23f;background-image:linear-gradient(135deg,#ffd23f,#ff7a1a)">' +
+      '<div style="font-size:12px;letter-spacing:3px;font-weight:bold;color:#120a1f">GENERAL ACCESS' + (s.guestCount ? " +" + s.guestCount : "") + "</div>" +
+      '<div style="font-size:26px;font-weight:900;text-transform:uppercase;color:#120a1f">' + escapeHtml(s.name) + "</div>" +
+      '<div style="font-family:monospace;font-size:13px;color:#4a2a10">' + code + "</div>" +
+      "</td></tr></table>" +
+      '<p style="margin:0 0 6px"><b style="color:#ff2e88">Line-up:</b> Coco Trash en vivo (ska y rock en español, ~9:00 PM por confirmar) · karaoke · beer pong · fiesta</p>' +
       '<p style="margin:0 0 6px"><b style="color:#ff2e88">Cuándo:</b> sábado 21 de noviembre 2026, 5:00 PM</p>' +
       '<p style="margin:0 0 18px"><b style="color:#ff2e88">Dónde:</b> ' + escapeHtml(ADDRESS) + "</p>" +
       '<p style="margin:0 0 10px"><a href="' + MAPS_URL + '" style="display:inline-block;background:#ff2e88;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">Cómo llegar</a> ' +

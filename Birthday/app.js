@@ -239,7 +239,7 @@
     function toIcsDate(d) { return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""); }
 
     function initCalendar() {
-        var details = "Música en vivo, karaoke, beer pong y fiesta. " + MAPS_URL;
+        var details = "Coco Trash en vivo (ska y rock en español, ~9:00 PM por confirmar), karaoke, beer pong y fiesta. " + MAPS_URL;
         var gcal = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
             "&text=" + encodeURIComponent("ALAN FEST 21 🎉") +
             "&dates=" + toIcsDate(EVENT_START) + "/" + toIcsDate(EVENT_END) +
@@ -403,7 +403,6 @@
             return {
                 attending: attending,
                 name: value("name"),
-                age: value("age"),
                 email: value("email"),
                 hasGuests: hasGuests,
                 guestCount: hasGuests ? parseInt(guestCount.value, 10) || 1 : 0,
@@ -439,14 +438,12 @@
 
             var invalid = [];
             if (s.name.length < 2) invalid.push("name");
-            var ageNum = Number(s.age);
-            if (!s.age || !(ageNum >= 1 && ageNum <= 120)) invalid.push("age");
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email)) invalid.push("email");
-            ["name", "age", "email"].forEach(function (n) {
+            ["name", "email"].forEach(function (n) {
                 form.elements[n].setAttribute("aria-invalid", invalid.indexOf(n) > -1 ? "true" : "false");
             });
             if (invalid.length) {
-                setMsg(msg, "Revisa tu nombre, edad y correo.", "error");
+                setMsg(msg, "Revisa tu nombre y correo.", "error");
                 form.elements[invalid[0]].focus();
                 return;
             }

@@ -248,6 +248,8 @@ a { color: inherit; }
     font-family: var(--display); font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: .95; letter-spacing: 1px;
 }
 .act--headliner .act__name { font-size: clamp(3rem, 10vw, 6rem); }
+.act__meta { margin-top: 6px; font-weight: 700; font-size: .85rem; text-transform: uppercase; letter-spacing: 2px; }
+.act__meta em { font-style: normal; font-weight: 500; opacity: .8; text-transform: none; letter-spacing: 0; }
 .act__name--sm { font-size: 2rem !important; color: var(--pink); }
 .act__icon {
     position: absolute; right: 18px; top: 14px; font-size: 3rem;
